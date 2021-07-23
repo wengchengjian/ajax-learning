@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Get 请求</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">点击发送请求</button>
+    <div id="result"></div>
+    <script>
+        var button = document.getElementById('btn');
+        var div = document.getElementById('result');
+        btn.onclick = function () {
+            const xhr  = new XMLHttpRequest();
+            
+            xhr.open('GET','http://127.0.0.1:8000/server');
+            // xhr.setRequestHeader('Access-Controll-Allow-Origin','*');
+            xhr.send();
+            //readystate 是xhr对象中的属性，表示状态：0 1 2 3 4
+            xhr.onreadystatechange=function () {
+                //判断服务端返回的状态
+                if(xhr.readyState === 4){
+                    //判断响应状态吗 200 404 403 500
+                    if(xhr.status>=200 && xhr.status<=300){
+                        //处理结果 行，头，空行，体
+                        console.log(xhr.status);
+                        console.log(xhr.statusText);
+                        console.log(xhr.getAllResponseHeaders());
+                        console.log(xhr.response);
+                        div.innerHTML = xhr.response;
+                        
+                    }else{
+
+                    }
+                }
+                
+            };
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON响应</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #89b;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="result"></div>
+    <script>
+        const div = document.getElementById('result');
+        window.addEventListener('keydown', function () {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'http://127.0.0.1:8000/server');
+
+            xhr.responseType = 'json';
+
+            xhr.send();
+
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState === 4) {
+                    if (this.status >= 200 && this.status < 300) {
+                        let data = this.response;
+                        
+                        console.log(data);
+                        div.innerHTML = data.name;
+                    }
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

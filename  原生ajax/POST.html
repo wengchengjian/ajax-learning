@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Post请求</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #903;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="result"></div>
+    <script>
+        const div = document.getElementById('result');
+        div.addEventListener('mouseover', function () {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://127.0.0.1:8000/server');
+
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+            
+            xhr.setRequestHeader('name','wcj');
+
+            xhr.send('a=100&b=200&c=300');
+            // xhr.send('a:100&b:200&c:300');
+
+
+            xhr.addEventListener('readystatechange', function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status < 300 && xhr.status >= 200) {
+                        div.innerHTML = xhr.response;
+                    }
+                }
+            });
+        });
+        div.addEventListener('mouseout', function () {
+            this.innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>
